@@ -36,6 +36,11 @@ CREATE TABLE `group_message_plugin_activate`  (
   `plugin_name` varchar(50) NOT NULL,
   CONSTRAINT `fake_plugin_name` FOREIGN KEY (`plugin_name`) REFERENCES `group_message_plugin` (`plugin_name`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE `plugin_out_blueprint`  (
+  `plugin_name` varchar(30) NOT NULL,
+  `url` varchar(30) CHARACTER NOT NULL,
+  `package_name` varchar(200) NOT NULL
+);
 
 ```
 
