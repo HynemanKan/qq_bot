@@ -1,0 +1,41 @@
+
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">用户</h1>
+  </div>
+  <div class="col-sm-3 col-md-2 col-sm-push-9 col-md-push-8">
+      <a class="btn btn-success" onclick="main_jumpTo('/plugin/main/index/useradd')">
+          <span class="glyphicon glyphicon-plus"></span>新建
+      </a>
+  </div>
+</div>
+<div class="row">
+    <table class="table table-hover col-sm-12 col-md-12">
+        <thead>
+            <tr>
+                <th class="col-sm-4 col-md-4">学号/工号</th>
+                <th class="col-sm-4 col-md-4">权限</th>
+                <th class="col-sm-4 col-md-4">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users -%}
+            <tr>
+                <td>{{ user.userid }}</td>
+                {% if user.type == 1 %}
+                    <td>插件管理员</td>
+                {% elif user.type == 2 %}
+                    <td>内容管理员</td>
+                {% elif user.type == 0 %}
+                    <td>系统管理员</td>
+                {% else %}
+                    <td>数据异常</td>
+                {% endif %}
+                <td>
+                    <a href="/user/{{ user.userid }}" target="view_window">详情</a>
+                </td>
+            </tr>
+        {%- endfor %}
+        </tbody>
+    </table>
+</div>

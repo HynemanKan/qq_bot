@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">私聊插件</h1>
+  </div>
+</div>
+    <div class="alert alert-danger">
+        <strong>警告！</strong>在停用插件前请先确定是否存在依赖关系，否则将导致出错！
+    </div>
+<div class="row">
+    <table class="table table-hover col-sm-12 col-md-12">
+        <thead>
+            <tr>
+                <th class="col-sm-3 col-md-3">插件</th>
+                <th class="col-sm-3 col-md-3">包名</th>
+                <th class="col-sm-2 col-md-2">详情</th>
+                <th class="col-sm-4 col-md-4">开关</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for plugin in plugins -%}
+            <tr>
+                <td>{{ plugin.bname }}</td>
+                <td>{{ plugin.package_name }}</td>
+                <td>
+                    <a onclick="goto('private','私聊插件','{{ plugin.name }}','{{ plugin.bname }}')">详情页</a>
+                    <span id="info_{{ plugin.name }}">{{ plugin.bstate }}</span>
+                </td>
+                <td>
+                    <a id="btn_{{ plugin.name }}_0" class="btn btn-success" >启用</a>
+                    <a id="btn_{{ plugin.name }}_1"  class="btn btn-info">临时停用</a>
+                    <a id="btn_{{ plugin.name }}_2"  class="btn btn-danger">永久停用</a>
+                    <script>
+                        $("#btn_{{ plugin.name }}_0").click(function(){
+                            if(change_state('{{ plugin.name }}',0)>0) {
+                               $("#info_{{ plugin.name }}").text("启用");
+                            }else{
+                                console.log("error")
+                            }
+                        });
+                        $("#btn_{{ plugin.name }}_1").click(function(){
+                            if(change_state('{{ plugin.name }}',1)>0) {
+                                $("#info_{{ plugin.name }}").text("临时停用");
+                            }else{
+                                console.log("error")
+                            }
+                        });
+                        $("#btn_{{ plugin.name }}_2").click(function(){
+                            if(change_state('{{ plugin.name }}',2)>0) {
+                                $("#info_{{ plugin.name }}").text("永久停用");
+                            }else{
+                                console.log("error")
+                            }
+                        });
+
+                    </script>
+                </td>
+            </tr>
+        {%- endfor %}
+        </tbody>
+    </table>
+    <script>
+        function change_state(plugin_name,state){
+            window.fun_state=0
+            $.post("/plugin/main/API/v1/private_plugin.json",{
+                plugin_name:plugin_name,
+                state:state
+            },
+            function(data,status){
+                if (status == "success"){
+                    console.log(data);
+                    data = JSON.parse(data)
+                    if (data.state == "success"){
+                        console.log("ok");
+                        $("#info_"+plugin_name).text(data.bstate);
+                    }else{
+                        alert(data.message);
+                    }
+                }else{
+                    alert("server error");
+                }
+            })
+            return window.fun_state
+        }
+
+    </script>
+</div>

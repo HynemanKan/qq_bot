@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">用户创建</h1>
+  </div>
+</div>
+<form role="form">
+    <div class="form-group">
+        <label for="group_id">群号</label>
+        <input type="number" class="form-control" id="group_id" name="group_id">
+        <p class="help-block" id="group_id_info"></p>
+    </div>
+    <div class="from-group">
+        <label for="bname">简称</label>
+        <input type="text" class="form-control" id="bname" name="bname">
+        <p class="help-block" id="bname_info"></p>
+    </div>
+</form>
+<a onclick="addgroup()" class="btn btn-success">添加</a>
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    info
+                </h4>
+            </div>
+            <div class="modal-body text-center">
+                <p id="info"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+    function addgroup() {
+        group_id = $("#group_id").val();
+        bname = $("#bname").val()
+        $.post("/plugin/main/API/v1/group_add.js",{
+            group_id:group_id,
+            bname:bname,
+        },function (data,status) {
+            if (status == "success"){
+                    data = JSON.parse(data)
+                    if (data.state == "success"){
+                        $("#info").text(data.info);
+                        $("#infoModal").modal("show");
+                    }else{
+                        alert(data.message);
+                    }
+                }else{
+                    alert("server error");
+                }
+        })
+    }
+</script>

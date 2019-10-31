@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">留言</h1>
+  </div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th class="col-sm-3 col-md-3">留言人</th>
+            <th class="col-sm-6 col-md-6">内容</th>
+            <th class="col-sm-2 col-md-2">时间</th>
+            <th class="col-sm-1 col-md-1">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for message in messages -%}
+        <tr>
+            <td>{{ message.sender_id }}</td>
+            {% if message.detail != "Dialogue_Detail_None" %}
+            <td><p data-toggle="tooltip" title="{{ message.detail}}">{{ message.detail[:40] }}</p></td>
+            {% else %}
+            <td>无法预览</td>
+            {% endif %}
+            <td>
+                {{ message.time }}
+            </td>
+            <td>
+                <a target="_blank" href="/dialogue/{{ message.sender_id }}">回复</a>
+            </td>
+        </tr>
+    {%- endfor %}
+    </tbody>
+</table>

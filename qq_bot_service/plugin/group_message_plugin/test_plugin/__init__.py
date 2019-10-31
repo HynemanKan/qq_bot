@@ -1,0 +1,1 @@
+from .app import blueprint,handle,plugin_name, setup

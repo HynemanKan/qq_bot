@@ -1,0 +1,50 @@
+
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">用户创建</h1>
+  </div>
+</div>
+<form role="form">
+    <div class="form-group">
+        <label for="user_id">学号/工号</label>
+        <input type="text" class="form-control" id="user_id" name="user_id" onkeyup="check('user_id','user_id_info')">
+        <p class="help-block" id="user_id_info"></p>
+    </div>
+    <div class="form-group">
+        <label for="user_auth">用户权限</label>
+        <select class="select-xs" id="user_auth" name="user_auth">
+            <option value="0">系统管理员</option>
+            <option value="1">插件管理员</option>
+            <option value="2">内容管理员</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="user_id">动态密码</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <a type="submit" class="btn btn-default" onclick="try_submit()">提交</a>
+</form>
+
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    初始密码
+                </h4>
+            </div>
+            <div class="modal-body text-center">
+                <input type="text" id="newpassword"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="toCopyboard('newpassword')">点击复制</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="/static/js/user_add.js"></script>

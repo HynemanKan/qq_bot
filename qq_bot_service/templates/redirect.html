@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正在跳转</title>
+</head>
+<body>
+    正在跳转，请稍待
+    <script>
+        {{ add_js|safe }}
+        window.location.href='{{ target }}';
+    </script>
+</body>
+</html>

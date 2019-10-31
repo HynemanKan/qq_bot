@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="static/img/favicon.ico">
+
+    <title>小电君后台-主页</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/static/js/jquery-2.1.0.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/frame.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+        <div class="navbar-header">
+                    <a class="navbar-brand" onclick="goto('main','主菜单','home','主页')">qq机器人服务</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">现在位置:<span id="now_position">主菜单/主页</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        私聊插件
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for plugin in private_plugin %}
+                            <li><a id="{{ plugin.name }}" onclick="goto('private','私聊插件','{{ plugin.name }}','{{ plugin.bname }}')">{{ plugin.bname }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        群聊插件
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for plugin in group_plugin %}
+                            <li><a id="{{ plugin.name }}" onclick="goto('group','私聊插件','{{ plugin.name }}','{{ plugin.bname }}')">{{ plugin.bname }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {{ username }}
+                        <span class="glyphicon glyphicon-user"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/user/{{ username }}" target="_blank"><span class="glyphicon glyphicon-home"></span>&nbsp;用户主页</a></li>
+                        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;登出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div id="target-windows">
+        <div class="page-header">正在加载</div>
+        <script>
+            goto('main','主菜单','home','主页');
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+out_url = "your_out_address"
+cq_api_root = 'your_api'
+cq_access_token = 'your_token'
+cq_secret = 'your_secret'
+redis_host = 'host'
+redis_port = "port"
+redis_db = "db"
+mysql_host = "host"
+mysql_port = "port"
+mysql_username = "username"
+mysql_password = "your_password"
+mysql_db = "your _db"

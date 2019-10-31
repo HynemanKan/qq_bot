@@ -1,0 +1,34 @@
+<link href="/static/css/private_dashboard.css" rel="stylesheet">
+<script>
+    function main_jumpTo(herf) {
+        $.get(herf, function(result){
+            $("#page").html(result);
+            //$(".butobj").setAttribute("class","butobj");
+            arr= document.getElementsByClassName("butobj");
+            console.log(arr);
+            for(var i= 0;i<arr.length;i++){
+                console.log(arr[i].children[0].attributes['onclick']['value']);
+                console.log("jumpTo('"+herf+"')");
+                if (arr[i].children[0].attributes['onclick']['value'] == "main_jumpTo('"+herf+"')"){
+                    arr[i].className='butobj active';
+                    console.log("t")
+                }else {
+                    arr[i].className = 'butobj';
+                    console.log("f")
+                }
+            }
+        });
+    }
+</script>
+<div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="butobj active"><a>状态</a></li>
+            <!-- <li><a href="/index/userAdd">消息管理</a></li>-->
+          </ul>
+        </div>
+        <div id="page" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">详情</h1>
+            <p>无可修改内容</p>
+        </div>
+ </div>

@@ -1,0 +1,92 @@
+<h1 class="page-header">用户日活</h1>
+<div class="row">
+    <div class="container col-sm-6 col-md-6 col-xs-6">
+        <div class="jumbotron" style="background-color: #ffffff">
+            <div><h3>好友</h3></div>
+            <div id="friend_increase_chat" style="width: 100%;height: 200px;"></div>
+        </div>
+    </div>
+    <div class="container col-sm-6 col-md-6 col-xs-6">
+        <div class="jumbotron" style="background-color: #ffffff">
+            <div><h3>消息</h3></div>
+            <div id="message_handled_chat" style="width: 100%;height: 200px;"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container col-sm-6 col-md-6 col-xs-6">
+        <div class="jumbotron" style="background-color: #ffffff">
+            <h3>未读留言</h3>
+            <h1 class="text-right text-info">{{ message_num }}条</h1>
+        </div>
+    </div>
+</div>
+<!--表格绘制-->
+<script src="/static/js/echarts.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var friendChart = echarts.init(document.getElementById('friend_increase_chat'));
+    // 指定图表的配置项和数据
+            option = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: {{ friend_chat_name|safe }}
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: {{ friend_chat_data|safe }},
+                    color:"#91c7ae",
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+    // 使用刚指定的配置项和数据显示图表。
+    friendChart.setOption(option);
+
+    var messageChart = echarts.init(document.getElementById('message_handled_chat'));
+
+            option = {
+                color: ['#607d8b'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : {{ message_chat_name|safe }},
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'回话量',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:{{ message_chat_data|safe }},
+                    }
+                ]
+            };
+
+    // 使用刚指定的配置项和数据显示图表。
+    messageChart.setOption(option);
+
+</script>

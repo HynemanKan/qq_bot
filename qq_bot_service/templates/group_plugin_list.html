@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-sm-3 col-md-2">
+    <h1 class="page-header">群聊插件</h1>
+  </div>
+</div>
+<div class="panel-group" id="accordion">
+    {% for group in groups %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+				   href="#collapse{{ group.g_id }}">
+					{{ group.g_name }}&nbsp;{{ group.g_id }}
+				</a>
+			</h4>
+		</div>
+		<div id="collapse{{ group.g_id }}" class="panel-collapse collapse in">
+			<div class="panel-body">
+                <table class="table table-hover row">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-3 col-md-3">插件</th>
+                            <th class="col-sm-3 col-md-3">包名</th>
+                            <th class="col-sm-2 col-md-2">详情</th>
+                            <th class="col-sm-4 col-md-4">开关</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for plugin in group.plugins -%}
+                        <tr>
+                            <td>{{ plugin.bname }}</td>
+                            <td>{{ plugin.package_name }}</td>
+                            <td>
+                                <a onclick="goto('group','群聊插件','{{ plugin.name }}','{{ plugin.bname }}')">详情页</a>
+                                <span id="info_{{ group.g_id }}_{{ plugin.name }}">{{ plugin.bstate }}</span>
+                            </td>
+                            <td>
+                                <a id="btn_{{ group.g_id }}_{{ plugin.name }}_0" class="btn btn-success" >启用</a>
+                                <a id="btn_{{ group.g_id }}_{{ plugin.name }}_1"  class="btn btn-info">停用</a>
+                                <script>
+                                    $("#btn_{{ group.g_id }}_{{ plugin.name }}_0").click(function(){
+                                        if(change_group_state("{{ group.g_id }}",'{{ plugin.name }}',0)>0) {
+                                           $("#info_{{ plugin.name }}").text("启用");
+                                        }else{
+                                            console.log("error")
+                                        }
+                                    });
+                                    $("#btn_{{ group.g_id }}_{{ plugin.name }}_1").click(function(){
+                                        if(change_group_state("{{ group.g_id }}",'{{ plugin.name }}',1)>0) {
+                                            $("#info_{{ plugin.name }}").text("停用");
+                                        }else{
+                                            console.log("error")
+                                        }
+                                    });
+                                </script>
+                            </td>
+                        </tr>
+                    {%- endfor %}
+                    </tbody>
+                </table>
+                <script>
+                    function change_group_state(group_id,plugin_name,state){
+                        window.fun_state=0
+                        $.post("/plugin/main/API/v1/group_plugin.json",{
+                            group_id:group_id,
+                            plugin_name:plugin_name,
+                            state:state
+                        },
+                        function(data,status){
+                            if (status == "success"){
+                                console.log(data);
+                                data = JSON.parse(data)
+                                if (data.state == "success"){
+                                    console.log("ok");
+                                    $("#info_"+group_id+"_"+plugin_name).text(data.bstate);
+                                }else{
+                                    alert(data.message);
+                                }
+                            }else{
+                                alert("server error");
+                            }
+                        })
+                        return window.fun_state
+                    }
+                </script>
+			</div>
+		</div>
+	</div>
+    {% endfor %}
+</div>

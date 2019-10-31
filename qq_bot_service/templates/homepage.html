@@ -1,0 +1,42 @@
+<link href="/static/css/dashboard.css" rel="stylesheet">
+<script>
+    function main_jumpTo(herf) {
+        $.get(herf, function(result){
+            $("#page").html(result);
+            //$(".butobj").setAttribute("class","butobj");
+            arr= document.getElementsByClassName("butobj");
+            console.log(arr);
+            for(var i= 0;i<arr.length;i++){
+                console.log(arr[i].children[0].attributes['onclick']['value']);
+                console.log("jumpTo('"+herf+"')");
+                if (arr[i].children[0].attributes['onclick']['value'] == "main_jumpTo('"+herf+"')"){
+                    arr[i].className='butobj active';
+                    console.log("t")
+                }else {
+                    arr[i].className = 'butobj';
+                    console.log("f")
+                }
+            }
+        });
+    }
+</script>
+<div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="butobj active"><a onclick="main_jumpTo('/plugin/main/index/state')">状态</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/user')">用户管理</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/useradd')">用户创建</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/groupadd')">群添加</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/group_plugin')">群插件管理</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/private_plugin')">私聊插件管理</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/message')">留言</a></li>
+                <li class="butobj"><a onclick="main_jumpTo('/plugin/main/index/re_import')">重启</a></li>
+            </ul>
+        </div>
+        <div id="page" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1>加载中</h1>
+            <script>
+                main_jumpTo("/plugin/main/index/state")
+            </script>
+        </div>
+ </div>
