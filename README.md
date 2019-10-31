@@ -50,7 +50,7 @@ CREATE TABLE `plugin_out_blueprint`  (
 
 ### 配置反向代理
 
-将/admin/和/out/分辨映射到想要的端口或域名上。
+将/admin/和/out/映射到想要的端口或域名上。前者将是管理页面的入口，后者将是用户页面的入口
 
 ### 配置setupfile.py 文件
 
