@@ -18,6 +18,22 @@ pip install pymysql,redis,cqhttp
 ### 建立必要数据库
 
 ```sql
+
+CREATE TABLE `admin`  (
+  `id` varchar(9) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `salt` varchar(36) NOT NULL,
+  `auth_class` int(11) NOT NULL,
+  `OTP_key` varchar(16) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `error_log`;
+CREATE TABLE `error_log`  (
+  `time` datetime(0) NOT NULL,
+  `error_detail` text NOT NULL
+);
+
 CREATE TABLE `private_message_plugin`  (
   `plugin_name` varchar(50)  NOT NULL,
   `plugin_bname` varchar(50) NOT NULL,
