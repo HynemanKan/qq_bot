@@ -73,3 +73,33 @@ mysql_db = "your _db"
 
 `bot.run()` 只适用于开发环境，不建议用于生产环境，因此 SDK 从 1.2.1 版本开始提供 `bot.wsgi` 属性以获取其内部兼容 WSGI 的 app 对象，从而可以使用 Gunicorn、uWSGI 等软件来部署。
 
+### 验证
+在数据库`private_message_plugin`表中添加如下数据，以启用测试插件。
+
+| plugin_name | plugin_bname | package_name | active |
+|  ----  | ----  | ----  | ----  |
+| private_test | 测试 | plugin.private_message_plugin.test_plugin | 0 |
+
+通过一下函数生成管理员用户
+
+```py
+import hashlib
+import uuid
+import pyotp
+salt = str(uuid.uuid4())
+print("your salt:",salt)
+md5 = hashlib.md5()
+your_password = "your_password"
+md5.update(f"{your_password}{salt}".encode("utf-8"))
+print("password:",md5.hexdigest())
+user_otp_key = pyotp.random_base32()
+print("your otp kay:",user_otp_key)
+```
+
+并添加到`admin`表中
+
+| id | password | salt | auth_class | OTP_key |
+| ---| -------- | ---- | ---------- | ------- |
+| your_id | md5_password | salt | 0 | otp kay |
+
+此时后台应可以访问，向机器人账号发送"test"，应回复"success"。
